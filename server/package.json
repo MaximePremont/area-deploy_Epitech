@@ -1,0 +1,68 @@
+{
+  "name": "Trirea",
+  "version": "1.0.0",
+  "description": "Trirea EPITECH project third year",
+  "main": "src/index.ts",
+  "scripts": {
+    "setup-dev-db": "npx prisma migrate dev --name init",
+    "setup-prod-db": "npx prisma generate",
+    "seed": "npx ts-node prisma/seed.ts",
+    "test": "echo 'Undefined tests' && exit 1",
+    "dev": "nodemon --watch src -e js,ts,json --exec \"ts-node src/index.ts\"",
+    "build": "tsup src/index.ts --format cjs --clean",
+    "start": "node dist/index.js",
+    "lint": "esling . --ext .ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EpitechPromo2025/B-DEV-500-LYN-5-2-area-maxime.premont/.git"
+  },
+  "keywords": [
+    "trirea",
+    "epitech"
+  ],
+  "author": "Trirea Team",
+  "license": "?",
+  "bugs": {
+    "url": "https://github.com/EpitechPromo2025/B-DEV-500-LYN-5-2-area-maxime.premont/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc"
+  },
+  "homepage": "https://github.com/EpitechPromo2025/B-DEV-500-LYN-5-2-area-maxime.premont#readme",
+  "devDependencies": {
+    "@types/config": "^3.3.0",
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.15",
+    "@types/node": "^18.11.17",
+    "@typescript-eslint/eslint-plugin": "^5.48.1",
+    "@typescript-eslint/parser": "^5.48.1",
+    "eslint": "^8.32.0",
+    "nodemon": "^2.0.20",
+    "prisma": "^4.8.1",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.1.1",
+    "tsup": "^6.5.0",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.8.1",
+    "@types/async": "^3.2.16",
+    "@types/axios": "^0.14.0",
+    "@types/bcrypt": "^5.0.0",
+    "@types/cookie-parser": "^1.4.3",
+    "@types/jsonwebtoken": "^9.0.0",
+    "@types/node-cron": "^3.0.7",
+    "async": "^3.2.4",
+    "axios": "^1.2.2",
+    "bcrypt": "^5.1.0",
+    "chalk": "^4.1.2",
+    "config": "^3.3.8",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
+    "http-status-codes": "^2.2.0",
+    "jsonwebtoken": "^9.0.0",
+    "node-cron": "^3.0.2",
+    "zod": "^3.20.2"
+  }
+}
