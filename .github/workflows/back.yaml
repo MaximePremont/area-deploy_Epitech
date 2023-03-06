@@ -14,15 +14,19 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 16
-    - name: Build binaries
+    - name: Build backend
       run: cd server && npm install && npm run build
-    - name: Upload binaries to release
+    - name: Zip backend
+      uses: montudor/action-zip@v1
+      with:
+        args: zip -qq -r backend.zip ./server/dist
+    - name: Upload backend to release
       uses: svenstaro/upload-release-action@v2
       with:
         release_name: ${{ github.ref }}-Backend
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ./server/dist/index.js
-        asset_name: App
+        file: ./backend.zip
+        asset_name: backend.zip
         tag: ${{ github.ref }}
-        overwrite: true
-        body: "Amazing trirea release!"
+        overwrite: false
+        body: "Amazing trirea backend release !"
