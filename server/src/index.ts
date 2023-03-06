@@ -17,6 +17,10 @@ const port = config.get<number>('port');
 
 const app = express();
 
+const fs = require('fs');
+const http = require('http');
+const https = require('https');
+
 // Cross Origin Resource Sharing
 app.use(cors({ origin: process.env.CORS_FRONT_URL, credentials: true }));
 
@@ -38,9 +42,18 @@ app.all('*', UnknowRoutesHandler);
 // ? Handle exceptions, needs to be the last 'use' of Express
 app.use(ExceptionsHandler);
 
-//TODO: Fix and use env var
-app.listen(port, () => {
-    Logging.success(`Server listening on port ${port}`);
-});
+const httpServer = http.createServer(app);
+httpServer.listen(port);
+
+// Certs
+if (fs.existsSync("/app/certs/privkay.pem")) {
+    const privateKey  = fs.readFileSync('/app/certs/privkey.pem', 'utf8');
+    const certificate = fs.readFileSync('/app/certs/cert.pem', 'utf8');
+    const ca = fs.readFileSync('/app/certs/chain.pem', 'utf8');
+    const credentials = {key: privateKey, cert: certificate, ca: ca};
+    
+    const httpsServer = https.createServer(credentials, app);
+    httpsServer.listen(8443);
+}
 
 module.exports = app;
