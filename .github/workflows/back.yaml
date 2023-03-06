@@ -21,7 +21,7 @@ jobs:
       with:
         release_name: ${{ github.ref }}-Backend
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ./server/dist
+        file: ./server/dist/index.js
         asset_name: App
         tag: ${{ github.ref }}
         overwrite: true
