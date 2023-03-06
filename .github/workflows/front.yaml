@@ -23,10 +23,10 @@ jobs:
     - name: Upload backend to release
       uses: svenstaro/upload-release-action@v2
       with:
-        release_name: ${{ github.ref }}-Frontend
+        release_name: ${{ github.ref }}-Build
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: ./frontend.zip
         asset_name: frontend.zip
         tag: ${{ github.ref }}
         overwrite: false
-        body: "Amazing trirea frontend release !"
+        body: "Amazing trirea release !"
