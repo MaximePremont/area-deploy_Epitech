@@ -1,4 +1,4 @@
-name: Publish
+name: Publish backend
 on:
   push:
     tags:
@@ -19,9 +19,10 @@ jobs:
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
       with:
+        release_name: ${{ github.ref }}-Backend
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: ./server/dist
-        asset_name: mything
+        asset_name: App
         tag: ${{ github.ref }}
         overwrite: true
         body: "Amazing trirea release!"
