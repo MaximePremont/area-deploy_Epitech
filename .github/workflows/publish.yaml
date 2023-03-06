@@ -5,6 +5,7 @@ on:
       - 'v*'
 jobs:
   build:
+    permissions: write-all
     name: Publish binaries
     runs-on: ubuntu-latest
     steps:
