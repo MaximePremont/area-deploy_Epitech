@@ -15,7 +15,7 @@ jobs:
       with:
         node-version: 19.4.0
     - name: Build mobile
-      run: cd mobile && npm install && react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
+      run: cd mobile && npm install --force && react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
     - name: Package mobile
       run: cd mobile && ./gradlew assembleRelease
     - name: Upload backend to release
