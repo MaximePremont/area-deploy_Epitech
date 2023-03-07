@@ -5,6 +5,7 @@ export const getOauthConnectFacebookUrl = () => {
     redirect_uri: import.meta.env.VITE_FACEBOOK_OAUTH_CONNECT_REDIRECT_URL,
     client_id: import.meta.env.VITE_FACEBOOK_OAUTH_CLIENT_ID,
     response_type: 'code',
+    state: 'state',
     scope: 'email public_profile user_friends',
   }
 
