@@ -83,6 +83,8 @@ export function TrireaForms({toggleModal}: TrireaFormProps) {
         return triggerInput
       })
       data.reactionInputs = data.reactionInputs.map(reactionInput => {
+        if (reactionInput.triggerOutputTypeId === undefined || reactionInput.triggerOutputTypeId === null)
+          return reactionInput;
         reactionInput.triggerOutputTypeId = Number(
           reactionInput.triggerOutputTypeId
         )
