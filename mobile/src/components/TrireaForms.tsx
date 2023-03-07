@@ -89,7 +89,7 @@ export function TrireaForms({toggleModal}: TrireaFormProps) {
         console.log("A");
         if (reactionInput.triggerOutputTypeId === undefined || reactionInput.triggerOutputTypeId === null || reactionInput.triggerOutputTypeId === 0) {
           console.log("B");
-          reactionInput.triggerOutputTypeId = undefined;
+          reactionInput.triggerOutputTypeId = 1;
           return reactionInput;
         }
         console.log("C");
@@ -104,7 +104,7 @@ export function TrireaForms({toggleModal}: TrireaFormProps) {
       toggleModal()
       Alert.alert('Success', 'Trirea created !')
     } catch (error) {
-      Alert.alert('Error', 'Something went wrong with trirea creation')
+      Alert.alert('Error', 'Something went wrong with trirea creation.')
     }
   }
 
