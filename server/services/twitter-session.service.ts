@@ -1,10 +1,10 @@
 import config from 'config';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import qs from 'qs';
 import Logging from "~/lib/logging";
 import {TwitterOauthToken, TwitterUserResult} from "~/types/twitter";
 
-export const getTwitterOauthToken = async ({code}: { code: string }): Promise<TwitterOauthToken> => {
+export const getTwitterOauthToken = async ({code, redirect_uri}: { code: string, redirect_uri: string }): Promise<TwitterOauthToken> => {
     const rootUrl = 'https://api.twitter.com/2/oauth2/token';
     const TWITTER_OAUTH_CLIENT_ID: string = config.get<string>('twitterConfig.clientId');
     const TWITTER_OAUTH_CLIENT_SECRET: string = config.get<string>('twitterConfig.clientSecret');
@@ -16,7 +16,7 @@ export const getTwitterOauthToken = async ({code}: { code: string }): Promise<Tw
     const options = {
         client_id: TWITTER_OAUTH_CLIENT_ID,
         code_verifier: "challenge",
-        redirect_uri: config.get<string>('twitterConfig.redirectUri'),
+        redirect_uri: redirect_uri,
         grant_type: 'authorization_code',
         code,
     };
@@ -34,6 +34,7 @@ export const getTwitterOauthToken = async ({code}: { code: string }): Promise<Tw
 
         return data;
     } catch (err: any) {
+        console.log((err as AxiosError).response);
         Logging.error('Failed to get Twitter Oauth Token');
         throw new Error(err);
     }
@@ -60,7 +61,7 @@ export async function getTwitterUser(access_token : string): Promise<TwitterUser
     }
 }
 
-export const getTwitterConnectOauthToken = async ({code}: { code: string }): Promise<TwitterOauthToken> => {
+export const getTwitterConnectOauthToken = async ({code, redirect_uri}: { code: string, redirect_uri: string }): Promise<TwitterOauthToken> => {
     const rootUrl = 'https://api.twitter.com/2/oauth2/token';
     const TWITTER_OAUTH_CLIENT_ID: string = config.get<string>('twitterConfig.clientId');
     const TWITTER_OAUTH_CLIENT_SECRET: string = config.get<string>('twitterConfig.clientSecret');
@@ -72,7 +73,7 @@ export const getTwitterConnectOauthToken = async ({code}: { code: string }): Pro
     const options = {
         client_id: TWITTER_OAUTH_CLIENT_ID,
         code_verifier: "challenge",
-        redirect_uri: config.get<string>('twitterConfig.redirectConnectUri'),
+        redirect_uri: redirect_uri,
         grant_type: 'authorization_code',
         code,
     };

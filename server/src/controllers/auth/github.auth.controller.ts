@@ -7,28 +7,22 @@ import {
 } from "~~/services/github-session.service";
 import { prisma } from "~/lib/prisma";
 import { generateToken } from "~/controllers/auth/auth.controller";
-import {githubConnectHandler} from "~/controllers/connect/github.connect.controller";
+import { getRedirectUri } from "../../utils/req";
 
 export const githubOAuthHandler = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const refreshToken = req.cookies["refreshToken"];
-  if (refreshToken) {
-    await githubConnectHandler(req, res, next)
-    return
-  }
-
   const code = req.query.code as string;
-  const pathUrl = (req.query.state as string) || "/";
+  const platform = (req.query.platform as string) || "web";
 
   if (!code) {
     Logging.warning("Github OAuth: No code provided");
     throw new BadRequestException("No code provided");
   }
 
-  const { access_token } = await getGithubOauthToken({ code });
+  const { access_token } = await getGithubOauthToken({ code, redirect_uri: getRedirectUri(req) });
   if (!access_token) {
     Logging.error("Github OAuth: getGithubOauthToken failed");
     throw new BadRequestException("No access_token provided");
@@ -59,8 +53,14 @@ export const githubOAuthHandler = async (
 
   const token = await generateToken(user, res);
   Logging.info(`User ${user.first_name} logged in w/ github`);
-  Logging.info(`Redirecting to ${pathUrl}`);
-  res.redirect(
-    `${process.env.CORS_FRONT_URL}/oauth_callback?access_token=${token}`
-  );
+  Logging.info(`Redirecting`);
+  if (platform === "mobile") {
+    res.redirect(
+      `mobile://com.mobile/CallbackLogin/${token}`
+    );
+  } else {
+    res.redirect(
+      `${process.env.CORS_FRONT_URL}/oauth_callback?access_token=${token}`
+    );
+  }
 };

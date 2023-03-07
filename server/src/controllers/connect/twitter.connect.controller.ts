@@ -6,6 +6,7 @@ import {
 import { prisma } from "~/lib/prisma";
 import { sign } from "jsonwebtoken";
 import { getTwitterConnectOauthToken } from "~~/services/twitter-session.service";
+import { getRedirectUri } from "../../utils/req";
 
 export const twitterConnectHandler = async (
   req: Request,
@@ -20,7 +21,7 @@ export const twitterConnectHandler = async (
     throw new BadRequestException("No code provided");
   }
 
-  const { access_token } = await getTwitterConnectOauthToken({ code });
+  const { access_token } = await getTwitterConnectOauthToken({ code, redirect_uri: getRedirectUri(req) });
   if (!access_token) {
     Logging.error("Twitter Connect OAuth: getTwitterConnectOauthToken failed");
     throw new BadRequestException("No access_token provided");

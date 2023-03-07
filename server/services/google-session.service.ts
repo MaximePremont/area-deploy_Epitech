@@ -1,17 +1,17 @@
 import config from 'config';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import qs from 'qs';
 import {GoogleOauthToken, GoogleUserResult} from "~/types/google";
 import Logging from "~/lib/logging";
 
-export const getGoogleOauthToken = async ({code}: { code: string }): Promise<GoogleOauthToken> => {
+export const getGoogleOauthToken = async ({code, redirect_uri}: { code: string, redirect_uri: string }): Promise<GoogleOauthToken> => {
     const rootUrl = 'https://oauth2.googleapis.com/token';
 
     const options = {
         code,
         client_id: config.get<string>('googleConfig.clientId'),
         client_secret: config.get<string>('googleConfig.clientSecret'),
-        redirect_uri: config.get<string>('googleConfig.redirectUri'),
+        redirect_uri: redirect_uri,
         grant_type: 'authorization_code',
     };
     try {
@@ -27,6 +27,7 @@ export const getGoogleOauthToken = async ({code}: { code: string }): Promise<Goo
 
         return data;
     } catch (err: any) {
+        console.log('err', (err as AxiosError).request)
         Logging.error('Failed to get Google Oauth Token');
         throw new Error(err);
     }
@@ -55,14 +56,14 @@ export async function getGoogleUser({
     }
 }
 
-export const getGoogleConnectOauthToken = async ({code}: { code: string }): Promise<GoogleOauthToken> => {
+export const getGoogleConnectOauthToken = async ({code, redirect_uri}: { code: string, redirect_uri: string }): Promise<GoogleOauthToken> => {
     const rootUrl = 'https://oauth2.googleapis.com/token';
 
     const options = {
         code,
         client_id: config.get<string>('googleConfig.clientId'),
         client_secret: config.get<string>('googleConfig.clientSecret'),
-        redirect_uri: config.get<string>('googleConfig.redirectConnectUri'),
+        redirect_uri: redirect_uri,
         grant_type: 'authorization_code',
     };
     try {
