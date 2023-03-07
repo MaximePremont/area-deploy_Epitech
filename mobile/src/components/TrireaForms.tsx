@@ -74,6 +74,7 @@ export function TrireaForms({toggleModal}: TrireaFormProps) {
   const [reactionsAvailable, setReactionsAvailable] = useState<Reaction[]>([])
 
   const submitTrirea = async (data: TrireaFormRequest) => {
+    console.log("SUBMIT");
     try {
       data.enabled = true
       data.reactionId = Number(data.reactionId)
