@@ -83,7 +83,16 @@ export function TrireaForms({toggleModal}: TrireaFormProps) {
         return triggerInput
       })
       data.reactionInputs = data.reactionInputs.map(reactionInput => {
-        reactionInput.triggerOutputTypeId = null
+        console.log("A");
+        if (reactionInput.triggerOutputTypeId === undefined || reactionInput.triggerOutputTypeId === null || reactionInput.triggerOutputTypeId === 0) {
+          console.log("B");
+          reactionInput.triggerOutputTypeId = undefined;
+          return reactionInput;
+        }
+        console.log("C");
+        reactionInput.triggerOutputTypeId = Number(
+          reactionInput.triggerOutputTypeId
+        )
         return reactionInput
       })
       data.triggerId = Number(data.triggerId)
@@ -102,10 +111,12 @@ export function TrireaForms({toggleModal}: TrireaFormProps) {
       Alert.alert('Error', 'Something went wrong with services')
     }
     if (services.isSuccess) {
-      const servicesFiltered = services.data?.filter(service => {
-        return service.subscribed
-      })
-      setServicesAvailable(servicesFiltered)
+      // TODO : UNCOMMENT THIS
+      // const servicesFiltered = services.data?.filter((service) => {
+      //     return service.subscribed
+      // })
+      // setServicesAvailable(servicesFiltered)
+      setServicesAvailable(services.data || [])
     }
   }, [services])
 
