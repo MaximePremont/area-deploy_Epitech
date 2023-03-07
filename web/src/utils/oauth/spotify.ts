@@ -3,7 +3,7 @@ export const getOauthConnectSpotifyUrl = () => {
 
   const options = {
     redirect_uri: import.meta.env.VITE_SPOTIFY_OAUTH_CONNECT_REDIRECT_URL,
-    client_id: import.meta.env.VITE_SPOTIFY_OAUTH_CONNECT_CLIENT_ID,
+    client_id: import.meta.env.VITE_SPOTIFY_OAUTH_CLIENT_ID,
     response_type: 'code',
     state: 'state',
     access_type: 'offline',
