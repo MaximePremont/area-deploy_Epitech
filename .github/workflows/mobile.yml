@@ -15,16 +15,16 @@ jobs:
       with:
         node-version: 19.4.0
     - name: Build mobile
-      run: cd mobile && npm install --force && react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
+      run: cd mobile && npm install --force && npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
     - name: Package mobile
-      run: cd mobile && ./gradlew assembleRelease
+      run: cd mobile/android && ./gradlew assembleRelease
     - name: Upload backend to release
       uses: svenstaro/upload-release-action@v2
       with:
         release_name: ${{ github.ref }}-Build
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: mobile/android/app/build/outputs/apk/app-release.apk
-        asset_name: trirea-app.apk
+        asset_name: client.apk
         tag: ${{ github.ref }}
         overwrite: false
         body: "Amazing trirea release !"
