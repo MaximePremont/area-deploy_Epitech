@@ -1,0 +1,30 @@
+name: Publish mobile
+on:
+  push:
+    tags:
+      - 'v*'
+jobs:
+  build:
+    permissions: write-all
+    name: Publish binaries
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 19.4.0
+    - name: Build mobile
+      run: cd mobile && npm install && react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
+    - name: Package mobile
+      run: cd mobile && ./gradlew assembleRelease
+    - name: Upload backend to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        release_name: ${{ github.ref }}-Build
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: mobile/android/app/build/outputs/apk/app-release.apk
+        asset_name: trirea-app.apk
+        tag: ${{ github.ref }}
+        overwrite: false
+        body: "Amazing trirea release !"
