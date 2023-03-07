@@ -23,7 +23,6 @@ export const getOauthTwitterUrl = () => {
       'follows.write',
       'offline.access',
     ].join(' '),
-    state: 'state',
   }
 
   const qs = new URLSearchParams(options)
@@ -50,7 +49,6 @@ export const getOauthConnectTwitterUrl = () => {
       'follows.write',
       'offline.access',
     ].join(' '),
-    state: 'state',
   }
 
   const qs = new URLSearchParams(options)
