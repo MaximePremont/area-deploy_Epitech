@@ -104,7 +104,7 @@ export function TrireaForms({toggleModal}: TrireaFormProps) {
       toggleModal()
       Alert.alert('Success', 'Trirea created !')
     } catch (error) {
-      Alert.alert('Error', 'Something went wrong with trirea creation.')
+      Alert.alert('Error', 'Something went wrong with trirea creation')
     }
   }
 

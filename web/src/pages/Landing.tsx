@@ -12,7 +12,7 @@ const Landing = () => {
   return (
     <div className="flex justify-between">
       <div className="space-y-16 p-24">
-        <h1 className="text-6xl font-bold">Create your own universe, !</h1>
+        <h1 className="text-6xl font-bold">Create your own universe</h1>
         <MainButton text="Get started" callback={register} />
         <p className="w-2/3 text-lg">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse

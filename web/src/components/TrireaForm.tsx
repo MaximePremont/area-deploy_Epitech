@@ -78,6 +78,19 @@ export const TrireaForm = ({ toggleModal }: TrireaFormProps) => {
           triggerInput.triggerInputTypeId = null
         return triggerInput
       })
+      data.reactionInputs = data.reactionInputs.map(reactionInput => {
+        console.log("A");
+        if (reactionInput.triggerOutputTypeId === undefined || reactionInput.triggerOutputTypeId === null || reactionInput.triggerOutputTypeId === 0) {
+          console.log("B");
+          reactionInput.triggerOutputTypeId = 1;
+          return reactionInput;
+        }
+        console.log("C");
+        reactionInput.triggerOutputTypeId = Number(
+          reactionInput.triggerOutputTypeId
+        )
+        return reactionInput
+      })
       data.triggerId = Number(data.triggerId)
       await createTrirea(data).unwrap()
       reset()
